@@ -1,18 +1,17 @@
 {% set name = "pep517" %}
 {% set version = "0.12.0" %}
 
-
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 931378d93d11b298cf511dd634cf5ea4cb249a28ef84160b3247ee9afb4e8ab0
 
 build:
-  skip: True  # [py<36]
-  number: 0
+  skip: true  # [py<36]
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
@@ -23,14 +22,14 @@ requirements:
   run:
     - python
     - importlib_metadata  # [py<38]
-    - tomli >=1.1.0       # [py>=36]
-    - zipp                # [py<38]
+    - tomli >=1.1.0  # [py>=36]
+    - zipp  # [py<38]
 
 test:
   imports:
     - pep517
   commands:
-    # temporarily skipping pip check on win and pypy build because of bizarre tqdm issue 
+    # temporarily skipping pip check on win and pypy build because of bizarre tqdm issue
     - pip check  # [not (win and python_impl == 'pypy')]
   requires:
     - pip
